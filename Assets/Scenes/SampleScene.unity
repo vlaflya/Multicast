@@ -207,13 +207,14 @@ MonoBehaviour:
   order: 0
   initializers:
   - {fileID: 11400000, guid: fcf389a0548608948b2a7222d5e95e4d, type: 2}
+  - {fileID: 11400000, guid: b97b2cedbe57d5048957c2a8607287be, type: 2}
   updateSystems:
+  - enabled: 1
+    system: {fileID: 11400000, guid: 443eb73acf125f54c912d7dd9459872e, type: 2}
   - enabled: 1
     system: {fileID: 11400000, guid: 88e89652b1efb3d43afb154b5f38ba46, type: 2}
   - enabled: 1
-    system: {fileID: 11400000, guid: b97b2cedbe57d5048957c2a8607287be, type: 2}
-  - enabled: 1
-    system: {fileID: 11400000, guid: 443eb73acf125f54c912d7dd9459872e, type: 2}
+    system: {fileID: 11400000, guid: f215848ab2c478f4f9b07d9a9b891658, type: 2}
   fixedUpdateSystems: []
   lateUpdateSystems: []
   cleanupSystems: []

@@ -10,6 +10,5 @@ public class SimpleEnemyController : MonoBehaviour, IHealthController
     {
         ScoreController.score++;
         Instantiate(deathParticles, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 }

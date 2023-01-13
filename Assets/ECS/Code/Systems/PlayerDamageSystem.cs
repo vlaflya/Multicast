@@ -47,6 +47,11 @@ public sealed class PlayerDamageSystem : UpdateSystem
         }
     }
 
+    private void DealDamageToEnemy(Entity entity)
+    {
+
+    }
+
     class EnemyToPlayerDistanceComparer : IComparer<Entity>
     {
         public Vector3 playerPos;

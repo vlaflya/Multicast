@@ -9,23 +9,19 @@ using Scellecs.Morpeh.Providers;
 [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 [CreateAssetMenu(menuName = "ECS/Systems/" + nameof(EnemySpawnerSystem))]
-public sealed class EnemySpawnerSystem : UpdateSystem
+public sealed class EnemySpawnerSystem: Initializer
 {
     [SerializeField] private EnemyData[] enemyDatas = new EnemyData[] { };
     [SerializeField] private float maxSpawnFromPlayerDistance;
     [SerializeField] private int maxEnemies;
-    private Filter filter;
+    private Filter enemyFilter;
     private Entity player;
 
     public override void OnAwake()
     {
-        filter = this.World.Filter.With<EnemyComponent>();
+        enemyFilter = this.World.Filter.With<EnemyComponent>();
         player = this.World.Filter.With<PlayerComponent>().First();
-    }
-
-    public override void OnUpdate(float deltaTime)
-    {
-        if (filter.GetLengthSlow() < maxEnemies)
+        for (int i = 0; i < maxEnemies; i++)
         {
             SpawnEnemy();
         }
@@ -36,20 +32,26 @@ public sealed class EnemySpawnerSystem : UpdateSystem
         var newEnemy = this.World.CreateEntity();
         int r = Random.Range(0, enemyDatas.Length);
         var data = GetRandomEnemy();
-        Vector3 pos = CreateStartPosition(player.GetComponent<TransformComponent>().position, player.GetComponent<PlayerComponent>().radius);
+        Vector3 pos = Helper.GetRandomPositionInCircle(player.GetComponent<TransformComponent>().position, player.GetComponent<PlayerComponent>().radius, maxSpawnFromPlayerDistance);
         GameObject enemyGameObject = Instantiate(data.prefab, pos, Quaternion.identity);
         newEnemy.SetComponent(new GameObjectComponent { gameObject = enemyGameObject });
         newEnemy.SetComponent(new TransformComponent { position = pos });
         newEnemy.SetComponent(new EnemyComponent { });
-        newEnemy.SetComponent(new HealthComponent { healthPoints = data.health, healthController = enemyGameObject.GetComponent<IHealthController>() });
+        newEnemy.SetComponent(new HealthComponent
+        {
+            destroyOnDeath = false,
+            maxHealth = data.health,
+            healthPoints = data.health,
+            healthController = enemyGameObject.GetComponent<IHealthController>()
+        });
     }
 
-    private Vector3 CreateStartPosition(Vector3 playerPosition, float playerRadius)
+    private void RespawnEnemy(Entity entity)
     {
-        float angle = Mathf.Deg2Rad * Random.Range(0, 360);
-        float distance = Random.Range(0, maxSpawnFromPlayerDistance) + playerRadius;
-        Vector3 pos = playerPosition + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * distance;
-        return pos;
+        Vector3 pos = Helper.GetRandomPositionInCircle(player.GetComponent<TransformComponent>().position, player.GetComponent<PlayerComponent>().radius, maxSpawnFromPlayerDistance);
+        entity.GetComponent<HealthComponent>().ResetHealth();
+        entity.GetComponent<TransformComponent>().position = pos;
+        entity.GetComponent<GameObjectComponent>().PositionGameObject(pos);
     }
 
     private EnemyData GetRandomEnemy()

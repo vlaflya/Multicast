@@ -8,12 +8,18 @@ using Unity.IL2CPP.CompilerServices;
 [System.Serializable]
 public struct HealthComponent : IComponent
 {
+    public float maxHealth;
     public float healthPoints;
+    public bool destroyOnDeath;
     public IHealthController healthController;
     
     public void DealDamage(float value)
     {
         healthPoints -= value;
         healthController.DealDamage(value);
+    }
+
+    public void ResetHealth(){
+        healthPoints = maxHealth;
     }
 }

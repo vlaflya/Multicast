@@ -24,7 +24,8 @@ public sealed class HealthSystem : UpdateSystem
             if (healthComponent.healthPoints <= 0)
             {
                 healthComponent.healthController.Kill();
-                entity.Dispose();
+                if(healthComponent.destroyOnDeath)
+                    entity.Dispose();
             }
         }
     }
