@@ -17,4 +17,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 520c7fa78d6ad2f4c826e575d4d4b9b6, type: 2}
   - {fileID: 11400000, guid: f8998048fc8d2914593ad549ed6b1d0b, type: 2}
   maxSpawnFromPlayerDistance: 20
-  maxEnemies: 1000
+  maxEnemies: 3000

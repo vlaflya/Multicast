@@ -38,7 +38,9 @@ public sealed class PlayerDamageSystem : UpdateSystem
         var counter = 0;
         foreach (var entity in sortedFilter)
         {
-            entity.GetComponent<HealthComponent>().healthPoints -= deltaTime * playerComponent.dps;
+            ref var healthComponent = ref entity.GetComponent<HealthComponent>();
+            float damage = deltaTime * playerComponent.dps;
+            healthComponent.DealDamage(damage);
             counter++;
             if (counter > maxEnemiesAttack)
                 break;
