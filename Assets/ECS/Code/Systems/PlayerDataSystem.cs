@@ -15,11 +15,16 @@ public sealed class PlayerDataSystem : Initializer
     {
         playerEntity = this.World.CreateEntity();
 
-
         GameObject playerGameObject = Instantiate(startPlayerData.prefab);
         var model = playerGameObject.GetComponent<PlayerModel>();
+
         model.speed = startPlayerData.startSpeed;
-        model.SetCallbacks(UpdatePlayerPosition);
+        model.radius = startPlayerData.startRadius;
+        model.dps = startPlayerData.startDps;
+
+        model.onPositionUpdated += UpdatePlayerPosition;
+        model.onDpsUpdated += UpdatePlayerDPS;
+        model.onRadiusUpdated += UpdatePlayerRadius;
 
         var player = new PlayerComponent
         {
@@ -27,6 +32,8 @@ public sealed class PlayerDataSystem : Initializer
             radius = startPlayerData.startRadius,
             controller = playerGameObject.GetComponent<PlayerController>()
         };
+        
+        playerGameObject.GetComponent<PlayerController>().OnStart();
         playerEntity.SetComponent(player);
         playerEntity.SetComponent(new TransformComponent{position = Vector3.zero});
     }
@@ -34,6 +41,12 @@ public sealed class PlayerDataSystem : Initializer
     public void UpdatePlayerPosition(Vector3 position)
     {
         playerEntity.GetComponent<TransformComponent>().position = position;
-        Debug.Log("Player position Updated " + playerEntity);
+    }
+
+    public void UpdatePlayerDPS(float value){
+        playerEntity.GetComponent<PlayerComponent>().dps = value;
+    }
+    public void UpdatePlayerRadius(float value){
+        playerEntity.GetComponent<PlayerComponent>().radius = value;
     }
 }

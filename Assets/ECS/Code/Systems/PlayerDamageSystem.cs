@@ -34,7 +34,6 @@ public sealed class PlayerDamageSystem : UpdateSystem
         });
         var sortedFilter = distanceFilter.OrderBy(entity => entity, comparer);
         var counter = 0;
-        Debug.Log("Player position " + playerTransformComponent.position + " " + player);
         foreach (var entity in sortedFilter)
         {
             entity.GetComponent<HealthComponent>().healthPoints -= deltaTime * playerComponent.dps;
@@ -49,9 +48,9 @@ public sealed class PlayerDamageSystem : UpdateSystem
         public Vector3 playerPos;
         public int Compare(Entity x, Entity y)
         {
-            int distX = (int)(Vector3.Distance(playerPos, x.GetComponent<TransformComponent>().position) * 100);
-            int distY = (int)(Vector3.Distance(playerPos, y.GetComponent<TransformComponent>().position) * 100);
-            return distX - distY;
+            Vector3 a = playerPos - x.GetComponent<TransformComponent>().position;
+            Vector3 b = playerPos - y.GetComponent<TransformComponent>().position;
+            return Comparer<float>.Default.Compare(a.sqrMagnitude, b.sqrMagnitude);
         }
     }
 }

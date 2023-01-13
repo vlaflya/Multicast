@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class SimpleEnemyController : MonoBehaviour, IHealthController
 {
+    [SerializeField] private GameObject deathParticles;
+    
     public void Kill(){
-        Debug.Log("Kill enemy");
+        ScoreController.score++;
+        Instantiate(deathParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }
