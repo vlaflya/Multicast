@@ -12,14 +12,15 @@ public struct HealthComponent : IComponent
     public float healthPoints;
     public bool destroyOnDeath;
     public IHealthController healthController;
-    
+
     public void DealDamage(float value)
     {
         healthPoints -= value;
         healthController.DealDamage(value);
     }
 
-    public void ResetHealth(){
+    public void ResetHealth()
+    {
         healthPoints = maxHealth;
     }
 }

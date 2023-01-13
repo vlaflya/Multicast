@@ -9,7 +9,7 @@ using Scellecs.Morpeh.Providers;
 [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 [CreateAssetMenu(menuName = "ECS/Systems/" + nameof(EnemySpawnerSystem))]
-public sealed class EnemySpawnerSystem: Initializer
+public sealed class EnemySpawnerSystem : Initializer
 {
     [SerializeField] private EnemyData[] enemyDatas = new EnemyData[] { };
     [SerializeField] private float maxSpawnFromPlayerDistance;

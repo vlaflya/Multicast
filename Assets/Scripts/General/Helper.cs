@@ -11,5 +11,4 @@ public class Helper
         Vector3 pos = center + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * distance;
         return pos;
     }
-
 }
