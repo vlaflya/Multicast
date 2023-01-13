@@ -9,6 +9,7 @@ public class PlayerCameraFollower : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     private IDisposable findPlayerStream;
+    
     void Start()
     {
         findPlayerStream = Observable.EveryUpdate()
@@ -19,10 +20,10 @@ public class PlayerCameraFollower : MonoBehaviour
         });
     }
 
-    public void AssignCameraToPlayer(){
+    public void AssignCameraToPlayer()
+    {
         findPlayerStream.Dispose();
         Transform playerTransform = GameObject.FindObjectOfType<PlayerModel>().transform;
         cinemachineVirtualCamera.Follow = playerTransform;
-        // cinemachineVirtualCamera.LookAt = playerTransform;
     }
 }

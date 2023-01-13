@@ -13,8 +13,8 @@ public class PlayerUI : MonoBehaviour
     private float prevDps;
     private float prevSpeed;
     private float prevRadius;
-
     private IDisposable findPlayerStream;
+    
     void Start()
     {
         findPlayerStream = Observable.EveryUpdate()

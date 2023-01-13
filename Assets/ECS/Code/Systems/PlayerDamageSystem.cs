@@ -15,6 +15,7 @@ public sealed class PlayerDamageSystem : UpdateSystem
     [SerializeField] private int maxEnemiesAttack;
     private Filter filter;
     private Entity player;
+
     public override void OnAwake()
     {
         filter = this.World.Filter.With<EnemyComponent>().With<HealthComponent>();
@@ -27,7 +28,8 @@ public sealed class PlayerDamageSystem : UpdateSystem
         var playerComponent = player.GetComponent<PlayerComponent>();
         var playerTransformComponent = player.GetComponent<TransformComponent>();
         comparer.playerPos = playerTransformComponent.position;
-        var distanceFilter = this.filter.Where(entity => {
+        var distanceFilter = this.filter.Where(entity =>
+        {
             var enemyTransform = entity.GetComponent<TransformComponent>();
             var distance = Vector3.Distance(enemyTransform.position, playerTransformComponent.position);
             return distance < playerComponent.radius;
@@ -38,7 +40,7 @@ public sealed class PlayerDamageSystem : UpdateSystem
         {
             entity.GetComponent<HealthComponent>().healthPoints -= deltaTime * playerComponent.dps;
             counter++;
-            if(counter > maxEnemiesAttack)
+            if (counter > maxEnemiesAttack)
                 break;
         }
     }

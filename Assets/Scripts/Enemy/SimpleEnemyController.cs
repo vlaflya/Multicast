@@ -5,8 +5,9 @@ using UnityEngine;
 public class SimpleEnemyController : MonoBehaviour, IHealthController
 {
     [SerializeField] private GameObject deathParticles;
-    
-    public void Kill(){
+
+    public void Kill()
+    {
         ScoreController.score++;
         Instantiate(deathParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);

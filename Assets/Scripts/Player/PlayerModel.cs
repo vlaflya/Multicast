@@ -12,7 +12,9 @@ public class PlayerModel : MonoBehaviour
     public Action<float> onSpeedUpdated;
     public Action<float> onDpsUpdated;
     public Action<float> onRadiusUpdated;
-    public void SetCallbacks(Action<Vector3> onPositionUpdated){
+    
+    public void SetCallbacks(Action<Vector3> onPositionUpdated)
+    {
         this.onPositionUpdated = onPositionUpdated;
     }
 }
