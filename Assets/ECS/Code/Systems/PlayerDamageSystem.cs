@@ -38,18 +38,18 @@ public sealed class PlayerDamageSystem : UpdateSystem
         var counter = 0;
         foreach (var entity in sortedFilter)
         {
-            ref var healthComponent = ref entity.GetComponent<HealthComponent>();
             float damage = deltaTime * playerComponent.dps;
-            healthComponent.DealDamage(damage);
+            DealDamageToEnemy(entity, damage);
             counter++;
             if (counter > maxEnemiesAttack)
                 break;
         }
     }
 
-    private void DealDamageToEnemy(Entity entity)
+    private void DealDamageToEnemy(Entity entity, float damage)
     {
-
+        ref var healthComponent = ref entity.GetComponent<HealthComponent>();
+        healthComponent.DealDamage(damage);
     }
 
     class EnemyToPlayerDistanceComparer : IComparer<Entity>
