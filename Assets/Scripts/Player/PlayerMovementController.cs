@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     private Vector3 moveAmount = Vector3.zero;
-    private Vector3 velocity = Vector3.zero;
     private CharacterController characterController;
 
     public void Configure()
@@ -16,7 +15,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public void Move(Vector3 direction, float speed)
     {
-        moveAmount = Vector3.SmoothDamp(moveAmount, direction * speed, ref velocity, 0.15f);
+        moveAmount = direction * speed;
         characterController.Move(moveAmount * Time.deltaTime);
     }
 }
